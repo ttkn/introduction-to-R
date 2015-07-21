@@ -8,11 +8,11 @@ complete <- function(directory, id = 1:332) {
   e <- function(x)
     {nrow(na.omit(read.csv(x, header=TRUE, sep=",")))}
   df <- data.frame()
-  colnames(df) <- c("id", "nobs")
   for (i in bfiles2){
-    
+    id <- list(read.csv(i)[1, "ID"])
+    nobs <- list(e(i))
+    df <- rbind(df, cbind(id, nobs))  
   }
-  (lapply(bfiles2, e))
   
   return(df)
   ## Return a data frame of the form:
