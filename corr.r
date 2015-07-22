@@ -10,21 +10,21 @@ corr <- function(directory, threshold = 0){
   ## Return a numeric vector of correlations
   ## NOTE: Do not round the result!
   
-  xfiles <- list.files("C:\\users\\Pearl\\documents\\r\\specdata", full.names = TRUE)
+  xfiles <- list.files("C:\\resolve\\introduction-to-R\\specdata", full.names = TRUE)
   
-  pain <- matrix()
+  pain <- vector(mode="numeric", length=0)
   
   e <- function(x)
   {nrow(na.omit(read.csv(x, header=TRUE, sep=",")))}
   
   e2 <- function(x){read.csv(x, header=TRUE, sep=",")}
 
-  e3 <- function(x){cor(e2(x)["nitrate"], e2(x)["sulfate"], use="complete.obs")}
+  e3 <- function(x){cor(e2(x)["nitrate"], e2(x)["sulfate"], use="p")}
         
   for(i in xfiles){
-    if(e(i)>threshold)
-      {
-      pain <- rbind(pain, lapply(i, e3))
-       }}
+    if(e(i)<threshold)
+      next
+    pain[i] <- e3(i)
+       }
   return(pain)
 }
