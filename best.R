@@ -1,10 +1,12 @@
 best <- function(state, outcome) {
   ## Read outcome data
   df <- read.csv("outcome-of-care-measures.csv", colClasses = "character")
+  
+  #lists to reference inputs against
   us_states <- list("AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY")
   disease <- list("heart attack", "heart failure", "pneumonia")
-  
-  ## Check that state and outcome are valid
+
+  ## produce error messages for invalid inputs
   if (missing(state))
       stop("No state specified. Please enter a state.")
   
@@ -17,6 +19,23 @@ best <- function(state, outcome) {
   if (outcome %in% disease == "FALSE")
       stop("Error: invalid outcome")
   
-  ## Return hospital name in that state with lowest 30-day death
-  ## rate
+  ## create new dataframe that filters the data source by state
+  er <- subset(df, df$State==state)
+  
+  # the input "outcome" needs to refer to the appropriate column number
+  if (outcome =="heart attack"){
+    outcome <- 11
+  } else if (outcome == "heart failure"){
+      outcome <- 17
+  } else if (outcome == "pneumonia"){
+      outcome <- 23
+  }
+  
+  # after conversion, outcome can be used to subset/slice a new dataframe,
+  # which is sorted by hospitals' 30-day death rate
+  er2 <- er[order(er[outcome]),]
+  
+  # Return hospital name in that state with lowest 30-day death rate
+  winner <- er2[1, "Hospital.Name"]
+  return(winner)
   }
