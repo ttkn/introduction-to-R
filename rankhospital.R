@@ -20,20 +20,23 @@ rankhospital <- function(state, outcome, num = "best") {
     stop("Error: invalid outcome")
   
   ## create new dataframe that filters the data source by state
-  er <- subset(df, df[7]==state 
-               & df[11] != "Not Available"
-               & df[17] != "Not Available"
-               & df[23] != "Not Available")
+  er <- subset(df, df[7]==state)
   
   # the input "outcome" needs to refer to the appropriate column number
   if (outcome =="heart attack"){
-    outcome <- 11
+    outcome <- er[11]
   } else if (outcome == "heart failure"){
-    outcome <- 17
+    outcome <- er[17]
   } else if (outcome == "pneumonia"){
-    outcome <- 23
+    outcome <- er[23]
   }
   
+  # the outcome columns need conversion from character 
+  # to numeric in order to have proper sorting
+  for (i in outcome) {
+    outcome <- suppressWarnings(as.numeric(i)) #final result after trial & error
+  }
+  er <- er[complete.cases(er),]
   if (num == "best")
     num <- 1
   
@@ -42,11 +45,11 @@ rankhospital <- function(state, outcome, num = "best") {
   # otherwise, hospitals are sorted by mortality rates followed by name
   # and the rank corresponding to num is returned
   if (num == "worst"){
-    er2 <- er[order(-xtfrm(er[outcome]), er["Hospital.Name"]),]
+    er2 <- er[order(-xtfrm(outcome), er["Hospital.Name"]),]
     winner <- er2[1, "Hospital.Name"]
     winner
   } else {
-    er2 <- er[order(er[outcome], er["Hospital.Name"]),]
+    er2 <- er[order(outcome, er["Hospital.Name"]),]
     winner <- er2[num, "Hospital.Name"]
     winner
   }

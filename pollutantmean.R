@@ -4,7 +4,7 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
   xfiles <- list.files("C:\\Users\\Pearl\\Documents\\r\\specdata", full.names = TRUE) 
   xfiles2 <- xfiles[id]
   
-  garganta <- do.call(
+  garganta <- do.call( #a lucky instance of do.call working correctly b/c of rbind
     "rbind",lapply(xfiles2, FUN=function(files)
       {read.csv(files, header=TRUE, sep=",")}))
   mean(garganta[, pollutant], na.rm = TRUE)

@@ -11,6 +11,8 @@ complete <- function(directory, id = 1:332) {
   for (i in bfiles2){
     id <- list(read.csv(i)[1, "ID"])
     nobs <- list(e(i))
+    # combine the two lists as columns, then combine the result as rows with df,
+    # making a new dataframe that has all the station ids and their nobs
     df <- rbind(df, cbind(id, nobs))  
   }
   

@@ -9,33 +9,37 @@ best <- function(state, outcome) {
   ## produce error messages for invalid inputs
   if (missing(state))
       stop("No state specified. Please enter a state.")
-  
   if (missing(outcome))
       stop("Please specify an outcome")
-    
   if (state %in% us_states == "FALSE")
       stop("Error: invalid state")
-   
   if (outcome %in% disease == "FALSE")
       stop("Error: invalid outcome")
   
+  
   ## create new dataframe that filters the data source by state
-  er <- subset(df, df$State==state)
+  er <- subset(df, df[7]==state)
   
   # the input "outcome" needs to refer to the appropriate column number
   if (outcome =="heart attack"){
-    outcome <- 11
+    outcome <- er[11]
   } else if (outcome == "heart failure"){
-      outcome <- 17
+    outcome <- er[17]
   } else if (outcome == "pneumonia"){
-      outcome <- 23
+    outcome <- er[23]
   }
+  
+  for (i in outcome) {
+    outcome <- suppressWarnings(as.numeric(i)) #final result after trial & error
+  }
+  er <- er[complete.cases(er),]
   
   # after conversion, outcome can be used to subset/slice a new dataframe,
   # which is sorted by hospitals' 30-day death rate
-  er2 <- er[order(er[outcome]),]
+  er2 <- er[order(outcome, er["Hospital.Name"]),]
   
   # Return hospital name in that state with lowest 30-day death rate
   winner <- er2[1, "Hospital.Name"]
   return(winner)
-  }
+}
+
