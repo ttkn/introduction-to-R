@@ -1,6 +1,13 @@
+# rankall returnas a list of hospitals ordered by the best
+# morbidity outcome for 3 diseases: heart attack, heart failure, and pnuemonia
+
 rankall <- function(outcome, num = "best") {
   
   df <- read.csv("outcome-of-care-measures.csv")
+  # to enable sorting, the following columns need to be converted to numeric (they import as factors).
+  # just using as.numeric(df[,11]) doesn't apply the changes to the dataframe, so when the function
+  # is called, nothing is actually sorted.
+  # levels(df[,11]) returns the factors in a column. adding the second [] returns the entire column 
   df[11] <- suppressWarnings(as.numeric(levels(df[,11])[df[,11]]))
   df[17] <- suppressWarnings(as.numeric(levels(df[,17])[df[,17]]))
   df[23] <- suppressWarnings(as.numeric(levels(df[,23])[df[,23]]))
