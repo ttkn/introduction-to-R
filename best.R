@@ -1,5 +1,5 @@
 # Reads a csv containing data describing hospitals across the US and
-# returns the best hospital for a specific outcome (heart attack, heart failure, or pneumonia)
+# returns the best hospital in a given state for a specific outcome (heart attack, heart failure, or pneumonia)
 
 best <- function(state, outcome) {
   ## Read outcome data
