@@ -1,5 +1,5 @@
 # rankall returnas a list of hospitals ordered by the best
-# morbidity outcome for 3 diseases: heart attack, heart failure, and pnuemonia
+# morbidity outcome for 3 categories: heart attack, heart failure, and pnuemonia
 
 rankall <- function(outcome, num = "best") {
   
@@ -35,7 +35,7 @@ rankall <- function(outcome, num = "best") {
   if (num == "best")
     num <- 1
   
-  result <- matrix(nrow=0, ncol=2)
+  result <- matrix(nrow=0, ncol=2) #empty container to be filled using loop
   
   # if "worst" was given for num, reverse order is used
   # otherwise, hospitals are sorted by mortality rates followed by name (sortie)
