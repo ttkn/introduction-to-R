@@ -1,6 +1,7 @@
-# rankhospital returns the name of a hospital whose mortality
-# rate for a given disease is the highest, lowest, 
-# or other rank in a given state
+# Similar to best.R, reads a csv containing data describing hospitals across the US, but instead
+# expands the scope by returning the specific rank of a hospital (best, worst, 2nd, 3rd, etc...)
+# for a specific outcome (heart attack, heart failure, or pneumonia)
+
 
 rankhospital <- function(state, outcome, num = "best") {
   df <- read.csv("outcome-of-care-measures.csv", colClasses = "character")
