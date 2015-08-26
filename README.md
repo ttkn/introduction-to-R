@@ -1,3 +1,5 @@
-This repository contains several R scripts that perform simple operations on a few small datasets. They were assigned in the Introduction to R course offered by Johns Hopkins University at Coursera.
+The files in this repository are assignments from the Introduction to R course offered by Johns Hopkins University at Coursera. 
 
-Three of the scripts, pollutantmean.R, complete.R, and corr.R, are based on 332 csv files that contain pollution monitoring data from 332 sites across the United States. The first, pollutantmean.R, practices reading and working with a large number of files in R.
+Three of them, pollutantmean.R, complete.R, and corr.R, work with 332 csv files that contain air pollution monitoring data from 332 sites across the United States. (Download here: https://d396qusza40orc.cloudfront.net/rprog%2Fdata%2Fspecdata.zip) They practice reading in a large number of files, combining them, and performing operations on the result.
+
+The other three, best.R, rankhospital.R, and rankall.R, use a csv containing various measures of performance for hospitals throughout the United States. (Download here: https://d396qusza40orc.cloudfront.net/rprog%2Fdata%2FProgAssignment3-data.zip) They constitute an exercise in subsetting and grouping data, sorting the results, and returning results by using indexing.
